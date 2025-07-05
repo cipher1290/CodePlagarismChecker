@@ -26,7 +26,7 @@ vector<string> filterCommonTokens(const vector<string>& tokens) {
 }
 
 
-// Standard LCS logic
+// Standard LCS logic...
 int LCSLength(const vector<string>& A, const vector<string>& B) {
     int n = A.size(), m = B.size();
     vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
