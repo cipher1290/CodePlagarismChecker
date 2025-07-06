@@ -41,22 +41,28 @@ string normalizeCode(const string& code) {
     return result;
 }
 
-// Tokenize based on basic C++ syntax
-vector<string> tokenize(const string& code) {
-    vector<string> tokens;
+vector<pair<string, int>> tokenizeWithLines(const string& code) {
+    vector<pair<string, int>> tokens;
     regex word_regex(R"([\w#]+|==|!=|<=|>=|&&|\|\||[{}\(\);,+*/=<>-])");
 
-    auto words_begin = sregex_iterator(code.begin(), code.end(), word_regex);
-    auto words_end = sregex_iterator();
+    istringstream iss(code);
+    string line;
+    int lineNum = 1;
 
-    for (auto it = words_begin; it != words_end; ++it) {
-        tokens.push_back(it->str());
+    while (getline(iss, line)) {
+        auto words_begin = sregex_iterator(line.begin(), line.end(), word_regex);
+        auto words_end = sregex_iterator();
+
+        for (auto it = words_begin; it != words_end; ++it) {
+            tokens.emplace_back(it->str(), lineNum);
+        }
+        ++lineNum;
     }
+
     return tokens;
 }
 
-// Read and process file
-vector<string> processFile(const string& filename) {
+vector<pair<string, int>> processFile(const string& filename) {
     ifstream file(filename);
     if (!file.is_open()) {
         cerr << "Cannot open file: " << filename << endl;
@@ -69,5 +75,6 @@ vector<string> processFile(const string& filename) {
 
     string noComments = removeComments(content);
     string normalized = normalizeCode(noComments);
-    return tokenize(normalized);
+
+    return tokenizeWithLines(normalized);
 }

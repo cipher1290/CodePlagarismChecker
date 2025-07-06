@@ -1,0 +1,27 @@
+.result-page {
+  text-align: center;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.result-page ul {
+  list-style: none;
+  padding: 0;
+}
+
+.result-page li {
+  margin: 10px 0;
+}
+
+button {
+  margin-top: 20px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
